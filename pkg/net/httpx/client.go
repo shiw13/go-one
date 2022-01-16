@@ -167,16 +167,30 @@ func (c *Client) GetJSON(ctx context.Context, url string, params url.Values, hea
 	return c.JSON(ctx, req, res)
 }
 
-func (c *Client) PostJSON(ctx context.Context, url string, params url.Values, header http.Header,
-	reqJo interface{}, res interface{}) (err error) {
+func (c *Client) PostJSON(ctx context.Context, url string, params url.Values, header http.Header, jo interface{}, res interface{}) error {
 	if params != nil {
 		url = url + "?" + params.Encode()
 	}
 
-	var req *http.Request
-	if req, err = NewJSONRequest(http.MethodPost, url, header, reqJo); err != nil {
+	req, err := NewJSONRequest(http.MethodPost, url, header, jo)
+	if err != nil {
 		return err
 	}
+
+	return c.JSON(ctx, req, res)
+}
+
+func (c *Client) PostForm(ctx context.Context, url string, params url.Values, header http.Header, res interface{}) error {
+	body := []byte(params.Encode())
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(body))
+	if err != nil {
+		return err
+	}
+
+	if header != nil {
+		req.Header = header
+	}
+	req.Header.Set(HeaderContentType, ContentTypeForm)
 
 	return c.JSON(ctx, req, res)
 }

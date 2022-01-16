@@ -7,4 +7,5 @@ const (
 
 const (
 	ContentTypeJSON = "application/json"
+	ContentTypeForm = "application/x-www-form-urlencoded"
 )

@@ -9,9 +9,8 @@ import (
 	"net/url"
 	"time"
 
-	"go-one/pkg/logger"
-	"go-one/pkg/util/bytesconv"
-
+	"github.com/shiw13/go-one/pkg/logger"
+	"github.com/shiw13/go-one/pkg/util/bytesconv"
 	"go.uber.org/zap"
 )
 

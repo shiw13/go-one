@@ -1,6 +1,6 @@
 package rescue
 
-import "go-one/pkg/logger"
+import "github.com/shiw13/go-one/pkg/logger"
 
 func Recover(cleanups ...func()) {
 	for _, cleanup := range cleanups {

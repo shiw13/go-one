@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"go-one/pkg/logger"
-	"go-one/pkg/startup"
+	"github.com/shiw13/go-one/pkg/logger"
+	"github.com/shiw13/go-one/pkg/startup"
 )
 
 type program struct{}

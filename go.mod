@@ -1,4 +1,4 @@
-module go-one
+module github.com/shiw13/go-one
 
 go 1.17
 

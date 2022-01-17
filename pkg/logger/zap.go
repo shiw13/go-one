@@ -3,9 +3,8 @@ package logger
 import (
 	"os"
 
-	"go-one/pkg/env"
-
 	"github.com/natefinch/lumberjack"
+	"github.com/shiw13/go-one/pkg/env"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

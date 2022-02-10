@@ -55,37 +55,20 @@ func NewJSONRequest(method, url string, header http.Header, jo interface{}) (*ht
 }
 
 func (c *Client) JSON(ctx context.Context, req *http.Request, res interface{}) error {
-	var bs []byte
-	var err error
-
-	if bs, err = c.Send(ctx, req); err != nil {
+	resp, err := c.Do(ctx, req)
+	if err != nil {
 		return err
 	}
 
+	defer func() { _ = resp.Body.Close() }()
+
 	if res != nil {
-		if err = json.Unmarshal(bs, res); err != nil {
+		if err = json.NewDecoder(resp.Body).Decode(res); err != nil {
 			return err
 		}
 	}
 
 	return nil
-}
-
-func (c *Client) Send(ctx context.Context, req *http.Request) ([]byte, error) {
-	resp, err := c.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-
-	defer func() { _ = resp.Body.Close() }()
-
-	var bs []byte
-	bs, err = io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	return bs, nil
 }
 
 func (c *Client) Do(ctx context.Context, req *http.Request) (*http.Response, error) {
